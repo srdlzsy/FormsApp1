@@ -1,0 +1,60 @@
+﻿@model List<Product>
+
+<div class="card card-body my-3">
+    <form asp-action="Index" method="get">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-11">
+                    <select name="category"
+                            class="form-select"
+                            asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "Name", ViewBag.SelectedCategory))">
+                        <option value="0">Hepsi</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-primary">Filtrele</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th style="width: 100px;">Product ID</th>
+                <th style="width: 100px;">Image</th>
+                <th>Name</th>
+                <th style="width: 100px;">Price</th>
+                <th style="width: 100px;">aktiflik</th>
+                <th style="width: 130px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Model[i].ProductId
+                        <input type="hidden" asp-for="@Model[i].ProductId">
+                    </td>
+                    <td>
+                        <img src="@Url.Content(Model[i].Image)" class="img-fluid" alt="">
+
+                    </td>
+                    <td>@Model[i].Name</td>
+                    <td>@Model[i].Price</td>
+                    <td>
+                        <input type="checkbox" asp-for="@Model[i].IsActive">
+                    </td>
+                    <td>
+                        <a href="/Home/Edit/@Model[i].ProductId" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="/Home/Delete/@Model[i].ProductId" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
